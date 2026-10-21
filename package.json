@@ -14,7 +14,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
-    "benchmark": "tsx scripts/benchmark.ts"
+    "benchmark": "tsx scripts/benchmark.ts",
+    "diagnose": "tsx scripts/diagnose.ts"
   },
   "dependencies": {
     "@react-three/drei": "9.114.3",
