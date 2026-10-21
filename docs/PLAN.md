@@ -1,5 +1,7 @@
 # Implementation plan (Phase 0)
 
+> Written before implementation. The module list was updated after Phase 5 to match the code: the solve moved from a separate fairing.ts into solver.ts, CG lives in sparse.ts, and evaluate.ts was added for the benchmark.
+
 ## Architecture
 
 ```
@@ -13,15 +15,15 @@ src/geometry/   pure TypeScript numerical code (no React, no Three.js)
   repair.ts      baseline (distance-only) and proposed (scored) repair
   validate.ts    junction, degree, component and duplicate statistics
   patches.ts     boundary-loop assembly, Coons and 3-sided grids
-  sparse.ts      sparse least-squares rows and a matrix-free normal operator
-  solver.ts      Jacobi-preconditioned conjugate gradients
-  fairing.ts     the quadratic energy E_total and its solve
+  sparse.ts      sparse least-squares rows, matrix-free normal operator, Jacobi-preconditioned CG
+  solver.ts      the quadratic energy E_total, its assembly and solve, plane fitting
   mesh.ts        welded triangle mesh, normals, quality and topology metrics
   flatten.ts     approximate 2D flattening and distortion metrics
   noise.ts       seeded noise generation with ground-truth provenance
   presets.ts     three procedural architectural networks
   pipeline.ts    input -> repair -> patches -> optimization -> metrics
-  io.ts          versioned JSON, OBJ, CSV and SVG export
+  io.ts          versioned JSON, OBJ, GLB and CSV export (SVG export lives in flatten.ts)
+  evaluate.ts    ground-truth junction scoring and surface error metrics for the benchmark
   history.ts     undo/redo snapshots
 src/app/        React + React Three Fiber interface
 scripts/        benchmark runner (npm run benchmark)
