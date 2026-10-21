@@ -61,7 +61,7 @@ export const defaultRepairSettings: RepairSettings = {
   mode: 'proposed',
   tolerance: 0.02,
   minJunctionAngleDeg: 20,
-  maxValence: 4,
+  maxValence: 6,
   useDesignerConstraints: true,
   weights: { distance: 1, tangent: 1 },
   suggestThreshold: 0.92,

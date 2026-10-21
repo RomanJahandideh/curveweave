@@ -127,22 +127,27 @@ export interface TriangleMesh {
 /** A patch mesh on a structured grid, before welding. */
 export interface SurfacePatch {
   id: string;
-  sides: number; // 3 or 4
+  /** 4 = Coons quad grid, 3 = triangular grid. */
+  sides: 3 | 4;
   /** Grid resolution per side (number of segments). */
   n: number;
   mesh: TriangleMesh;
   /** Per-vertex key used for welding shared boundary samples across patches. */
   keys: string[];
-  /** True if the vertex is fixed (boundary). */
+  /** True if the vertex lies on the boundary (fixed by the curves). */
   fixed: boolean[];
+  /** Grid stencil neighbours of each vertex (4 for quads, 6 for triangles). */
+  neighbours: number[][];
   /**
-   * For each boundary vertex index (non-corner) on side s, the vertex one
-   * step into the interior; used by the smooth-seam term.
+   * For each non-corner boundary vertex, the interior vertices whose average
+   * is one step inward; used by the smooth-seam term.
    */
-  inwardNeighbour: Map<number, number>;
+  inward: Map<number, number[]>;
   /** Boundary vertex indices of each side, ordered along the oriented side. */
   sideVertices: number[][];
   sideSources: string[];
+  /** Whether each side runs against the curve's canonical orientation. */
+  sideReversed: boolean[];
 }
 
 export interface CreaseConstraint {
