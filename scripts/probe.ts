@@ -16,3 +16,11 @@ for (const p of presets) {
     for (const c of r.candidates.filter((c) => c.status !== 'merged')) console.log('     ', c.id, c.status, c.reason);
   }
 }
+import { solveSurface, defaultOptimization } from '../src/geometry/solver';
+for (const p of presets) {
+  const r = repairNetwork(p.make());
+  const s = buildSurface(r.network, r.provenance.vertexOf, 12);
+  const o = solveSurface(s, defaultOptimization);
+  const m0 = surfaceMetrics(s), m1 = surfaceMetrics(s, o.positions);
+  console.log(p.name, o.result.converged, o.result.iterations, o.result.variables, o.result.equations, o.result.millis.toFixed(0) + 'ms', 'smooth', m0.smoothSeamAngleDeg.toFixed(2), '->', m1.smoothSeamAngleDeg.toFixed(2), 'sharp', m0.sharpSeamAngleDeg.toFixed(2), '->', m1.sharpSeamAngleDeg.toFixed(2));
+}

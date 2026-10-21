@@ -142,6 +142,8 @@ export function conjugateGradient(
     history.push(rel);
     onIterate?.(x, it);
     if (!Number.isFinite(rel))
+      return { x, iterations: it, converged: false, failed: true, failureReason: 'residual became non-finite', residualHistory: history };
+    if (rel <= tol) return { x, iterations: it, converged: true, failed: false, residualHistory: history };
     for (let i = 0; i < n; i++) z[i] = r[i] * Minv[i];
     const rzNew = dotv(r, z);
     const beta = rzNew / rz;
